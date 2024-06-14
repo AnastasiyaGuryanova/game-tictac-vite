@@ -1,0 +1,35 @@
+.wrapper {
+	min-height: 100vh;
+	width: 100%;
+	background: #7fa4a1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.field {
+	margin-bottom: 20px;
+	width: 300px;
+	height: 300px;
+	display: flex;
+	flex-wrap: wrap;
+	border: 1px solid #3c7c91;
+}
+
+.btnResetGame {
+	padding: 10px 15px;
+	background-color: #d8af9f;
+	border: 1px solid #3c7c91;
+	border-radius: 5px;
+	font-size: 20px;
+	color: #3d654e;
+	font-weight: bold;
+	cursor: pointer;
+	outline: none;
+
+	&:hover {
+		background-color: #e4d3a4;
+		transition: 0.3s all ease;
+	}
+}

@@ -1,21 +1,21 @@
 import { FieldLayout } from "@components";
 import { createUniqueNumber } from "@helpers";
-import { store } from "@store";
 import { makeMove } from "@actions";
+import { useSelector, useDispatch } from "react-redux";
 
 export const Field = () => {
-	const state = store.getState();
-	const { field } = state;
+	const field = useSelector((state) => state.field);
+	const dispatch = useDispatch();
 
 	const handleClick = (index) => {
-		store.dispatch(makeMove(index));
+		dispatch(makeMove(index));
 	};
 
 	return field.map((item, index) => {
 		return (
 			<FieldLayout
 				value={item}
-				handleClick={handleClick}
+				handleClick={() => handleClick(index)}
 				id={index}
 				key={createUniqueNumber()}
 			/>

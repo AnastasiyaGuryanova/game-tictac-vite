@@ -1,12 +1,12 @@
-import { actionTypes } from "@actions";
+import { MAKE_MOVE, RESTART_GAME } from "@actions";
 import { checkWinner } from "@helpers";
 import { initialState, PLAYERS } from "@constants";
 
-export const appReduser = (state = initialState, action) => {
+export const reducer = (state = initialState, action) => {
 	const { type, payload } = action;
 
 	switch (type) {
-		case actionTypes.MAKE_MOVE: {
+		case MAKE_MOVE: {
 			const { index } = payload;
 
 			if (state.field[index] || state.isGameEnded) {
@@ -17,22 +17,22 @@ export const appReduser = (state = initialState, action) => {
 			newField[index] = state.currentPlayer;
 
 			const isGameEnded = checkWinner(newField);
-			const isDraw = !isGameEnded && !newField.includes("");
+			const isDraw = !isGameEnded && !newField.includes(null);
 
 			return {
 				...state,
 				field: newField,
 				isGameEnded: isGameEnded,
 				isDraw: isDraw,
-				currentPlayer:
-					state.isGameEnded || isGameEnded
-						? state.currentPlayer
-						: state.currentPlayer === `${PLAYERS.X}`
-							? `${PLAYERS.O}`
-							: `${PLAYERS.X}`,
+				currentPlayer: isGameEnded
+					? state.currentPlayer
+					: state.currentPlayer === PLAYERS.X
+						? PLAYERS.O
+						: PLAYERS.X,
 			};
 		}
-		case actionTypes.RESET_GAME:
+
+		case RESTART_GAME:
 			return initialState;
 
 		default:

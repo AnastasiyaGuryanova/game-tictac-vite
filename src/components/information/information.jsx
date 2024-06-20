@@ -1,19 +1,21 @@
+import React from "react";
 import { InformationLayout } from "@components";
 import { MESSAGES } from "@constants";
-import { store } from "@store";
+import { useSelector } from "react-redux";
 
 export const Information = () => {
-	const state = store.getState();
-	const { isDraw, isGameEnded, currentPlayer } = state;
+	const currentPlayer = useSelector((state) => state.currentPlayer);
+	const isGameEnded = useSelector((state) => state.isGameEnded);
+	const isDraw = useSelector((state) => state.isDraw);
 
-	let content;
+	let status;
 	if (isDraw) {
-		content = `${MESSAGES.DRAW}`;
-	} else if (!isDraw) {
-		content = isGameEnded
-			? `${MESSAGES.VICTORY_PREFIX} ${currentPlayer}`
-			: `${MESSAGES.TURN_PREFIX} ${currentPlayer}`;
+		status = `${MESSAGES.DRAW}`;
+	} else if (isGameEnded) {
+		status = `${MESSAGES.VICTORY_PREFIX} ${currentPlayer}`;
+	} else {
+		status = `${MESSAGES.TURN_PREFIX} ${currentPlayer}`;
 	}
 
-	return <InformationLayout>{content}</InformationLayout>;
+	return <InformationLayout>{status}</InformationLayout>;
 };

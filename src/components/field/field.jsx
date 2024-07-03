@@ -1,24 +1,40 @@
-import { FieldLayout } from "@components";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import FieldLayout from "./field-layout";
 import { createUniqueNumber } from "@helpers";
 import { makeMove } from "@actions";
-import { useSelector, useDispatch } from "react-redux";
+import PropTypes from "prop-types";
 
-export const Field = () => {
-	const field = useSelector((state) => state.field);
-	const dispatch = useDispatch();
-
-	const handleClick = (index) => {
-		dispatch(makeMove(index));
+class Field extends Component {
+	handleClick = (index) => {
+		this.props.makeMove(index);
 	};
 
-	return field.map((item, index) => {
-		return (
+	render() {
+		const { field } = this.props;
+
+		return field.map((item, index) => (
 			<FieldLayout
 				value={item}
-				handleClick={() => handleClick(index)}
+				handleClick={() => this.handleClick(index)}
 				id={index}
 				key={createUniqueNumber()}
 			/>
-		);
-	});
+		));
+	}
+}
+
+Field.propTypes = {
+	field: PropTypes.arrayOf(PropTypes.string).isRequired,
+	makeMove: PropTypes.func.isRequired,
 };
+
+const mapStateToProps = (state) => ({
+	field: state.field,
+});
+
+const mapDispatchToProps = {
+	makeMove,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Field);

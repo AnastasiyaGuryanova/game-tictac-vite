@@ -1,4 +1,2 @@
-export * from "./field/field.jsx";
-export * from "./field/field-layout.jsx";
-export * from "./information/information.jsx";
-export * from "./information/information-layout.jsx";
+export { default as Field } from "./field/field.jsx";
+export { default as Information } from "./information/information.jsx";

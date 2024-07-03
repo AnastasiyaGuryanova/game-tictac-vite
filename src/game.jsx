@@ -1,14 +1,20 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import { restartGame } from "@actions";
-import { GameLayout } from "./game-layout";
+import GameLayout from "./game-layout";
 
-export const Game = () => {
-	const dispatch = useDispatch();
-
-	const handleRestart = () => {
-		dispatch(restartGame());
+class Game extends Component {
+	handleRestart = () => {
+		this.props.restartGame();
 	};
 
-	return <GameLayout onRestart={handleRestart} />;
+	render() {
+		return <GameLayout onRestart={this.handleRestart} />;
+	}
+}
+
+const mapDispatchToProps = {
+	restartGame,
 };
+
+export default connect(null, mapDispatchToProps)(Game);
